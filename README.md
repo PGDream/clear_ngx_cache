@@ -3,5 +3,8 @@
 
 - 调用清理脚本
 > 目录的*代表要清理目录下面所有缓存，绝对URL是清理文件
+ 
+ <pre>
  python clear_ngx_cache.py xx.xx.com/fuck/*
  python clear_ngx_cache.py xxx.xx.com/fuck/a.html
+ </pre>
