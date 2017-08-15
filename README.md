@@ -24,3 +24,7 @@
  python clear_ngx_cache.py xxx.xx.com/fuck/a.html #清理文件
  python clear_ngx_cache.py xxx.xx.com/* #清理整站
  ```
+
+# 运行要求
+
+python 版本要求 2.6+
