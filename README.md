@@ -9,6 +9,7 @@
 * cache_temp_dir: 删除目录时会把被删除目录临时放到这个目录
 * multi_cache_dir: 有多级目录时需要配置，例: /n/b/  缓存目录为n-b时需要配置
 * url: 需要清理的url，url不能添加请求协议头，如果添加再调用脚本时会结束脚本运行
+* clear_index_dir: 所有xxx.xx.cn|com 缓存默认存入此目录
 
 # 定时清理缓存
 
@@ -23,6 +24,7 @@
  python clear_ngx_cache.py xx.xx.com/fuck/* # 清理目录
  python clear_ngx_cache.py xxx.xx.com/fuck/a.html #清理文件
  python clear_ngx_cache.py xxx.xx.com/* #清理整站
+ python clear_ngx_cache.py xxx.xx.com/index.html #清理index.html
  ```
 
 # 运行要求
