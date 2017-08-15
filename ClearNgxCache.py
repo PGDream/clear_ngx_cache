@@ -51,6 +51,10 @@ class ClearNgxCache:
 
         # 获取URL的md5值
         cache_dir = self.process_file(cache_dir, clear_type)
+        if cache_dir is None:
+            print("没有匹配到清理的文件缓存")
+            exit(0)
+            
         # 根据类型清理缓存
         if clear_type == "dir":
             self.clear_dir(cache_dir)
