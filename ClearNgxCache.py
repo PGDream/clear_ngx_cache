@@ -2,6 +2,7 @@
 # -*- coding:utf8 -*-
 
 import os, sys
+import uuid
 
 try:
     from hashlib import md5
@@ -10,15 +11,14 @@ except:
 
 
 class ClearNgxCache:
-    cache_root_dir = "/data/xxx/"
+    cache_root_dir = "/data/xx/"
     cache_temp_dir = "/data/xx/"
     multi_cache_dir = ["/xx/xx/"]
     url = None
     clear_dir_cmd = "mv -o %s %s"
     clear_file_cmd = "rm -rf %s"
-    clear_index_dir = "index"
+    clear_index_dir = "xx"
    
-    
     def __init__(self, url):
         self.url = url
 
@@ -45,6 +45,8 @@ class ClearNgxCache:
         # 是否是hostname/index.html页面
         if cache_dir is None and str(self.url).split("/").__len__() == 2:
             cache_dir = self.cache_root_dir + self.clear_index_dir + "/"
+            self.clear_dir(cache_dir)
+            exit(0)
 
         # cache_dir 证明都没有命中多路径及主页
         if cache_dir is None:
@@ -68,11 +70,13 @@ class ClearNgxCache:
     # 整站清理
     def clear_total_file(self):
         url = str(self.url)
-        if len(url.split("/")) == 2 and url[len(url) - 1] == "*":
+        url_item = url.split("/")
+        if len(url_item) == 2 and url[len(url) - 1] == "*":
             self.clear_dir(self.cache_root_dir)
             exit(0)
-        elif len(url.split("/")) == 2 and url[len(url) - 1].strip() == "":
-            self.clear_file(self.cache_root_dir + self.clear_index_dir + "/" + self.md5_url())
+        elif len(url_item) == 2 and url_item[1].strip() != "":
+            md5_path = self.process_file(self.cache_root_dir + self.clear_index_dir + "/", "file")
+            self.clear_file(md5_path)
             exit(0)
 
     # 清理文件
@@ -86,7 +90,7 @@ class ClearNgxCache:
             exit(0)
         temp_clear_cmd = self.clear_file_cmd % cache_file
         print("清理命令:%s" % temp_clear_cmd)
-        # os.popen(temp_clear_cmd)
+        os.popen(temp_clear_cmd)
 
     # 清理目录
     def clear_dir(self, cache_dir):
@@ -97,9 +101,10 @@ class ClearNgxCache:
         if os.path.exists(cache_dir) is False:
             print("清理目录不存在")
             exit(0)
-        temp_clear_cmd = self.clear_dir_cmd % (cache_dir + "*", self.cache_temp_dir)
+        dir_fix = str(uuid.uuid4()).split("-")[0]
+        temp_clear_cmd = self.clear_dir_cmd % (cache_dir + dir_fix + "/", self.cache_temp_dir)
         print("清理命令:%s" % temp_clear_cmd)
-        # os.popen(temp_clear_cmd)
+        os.popen(temp_clear_cmd)
 
     # 检查清理类型 目录|文件
     def check_cache_type(self):
