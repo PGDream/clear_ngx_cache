@@ -17,7 +17,8 @@ class ClearNgxCache:
     clear_dir_cmd = "mv -o %s %s"
     clear_file_cmd = "rm -rf %s"
     clear_index_dir = "index"
-
+   
+    
     def __init__(self, url):
         self.url = url
 
@@ -54,7 +55,7 @@ class ClearNgxCache:
         if cache_dir is None:
             print("没有匹配到清理的文件缓存")
             exit(0)
-            
+
         # 根据类型清理缓存
         if clear_type == "dir":
             self.clear_dir(cache_dir)
@@ -69,6 +70,9 @@ class ClearNgxCache:
         url = str(self.url)
         if len(url.split("/")) == 2 and url[len(url) - 1] == "*":
             self.clear_dir(self.cache_root_dir)
+            exit(0)
+        elif len(url.split("/")) == 2 and url[len(url) - 1].strip() == "":
+            self.clear_file(self.cache_root_dir + self.clear_index_dir + "/" + self.md5_url())
             exit(0)
 
     # 清理文件
@@ -110,9 +114,7 @@ class ClearNgxCache:
         if clear_type is None:
             print("清理类型不能为空")
             exit(0)
-        m = md5()
-        m.update("%s" % self.url)
-        url_md5 = m.hexdigest()
+        url_md5 = self.md5_url()
         md5_url_len = len(url_md5)
         dir1 = url_md5[md5_url_len - 1:]
         dir2 = url_md5[md5_url_len - 3:md5_url_len - 1]
@@ -126,5 +128,14 @@ class ClearNgxCache:
             return "%s%s/%s/%s/%s" % (temp_cache_dir, dir1, dir2, dir3, url_md5)
         return None
 
+    # 计算url的md5值
+    def md5_url(self):
+        m = md5()
+        m.update("%s" % self.url)
+        return m.hexdigest()
+
+
+# clearNgxCache = ClearNgxCache("www.maiche.com/")
 clearNgxCache = ClearNgxCache(sys.argv[1])
 clearNgxCache.clear_cache()
+     
