@@ -25,6 +25,7 @@
  python clear_ngx_cache.py xxx.xx.com/fuck/a.html #清理文件
  python clear_ngx_cache.py xxx.xx.com/* #清理整站
  python clear_ngx_cache.py xxx.xx.com/index.html #清理index.html
+ python clear_ngx_cache.py xxx.xx.com/ #清理index目录
  ```
 
 # 运行要求
