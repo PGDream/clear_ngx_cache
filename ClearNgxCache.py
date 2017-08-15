@@ -10,8 +10,8 @@ except:
 
 
 class ClearNgxCache:
-    cache_root_dir = "/data/ngx_cache/"
-    cache_temp_dir = "/data/temp/"
+    cache_root_dir = "/data/xxx/"
+    cache_temp_dir = "/data/xxx/"
     multi_cache_dir = ["/news/detail/"]
     url = None
     clear_dir_cmd = "mv -o %s %s"
