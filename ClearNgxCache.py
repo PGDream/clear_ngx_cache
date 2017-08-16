@@ -102,7 +102,7 @@ class ClearNgxCache:
             print("清理目录不存在")
             exit(0)
         dir_fix = str(uuid.uuid4()).split("-")[0]
-        temp_clear_cmd = self.clear_dir_cmd % (cache_dir + dir_fix + "/", self.cache_temp_dir)
+        temp_clear_cmd = self.clear_dir_cmd % (cache_dir, self.cache_temp_dir + dir_fix + "/")
         print("清理命令:%s" % temp_clear_cmd)
         os.popen(temp_clear_cmd)
 
